@@ -1,0 +1,49 @@
+[plugin]
+id = "com.aliciaworks.audio.pipewire"
+name = "Audio-PipeWire"
+version = "1.0.0"
+description = "Native PipeWire audio backend for ultra-low latency on Linux systems"
+author = "AliciaWorks"
+
+[source]
+# Target the official PipeWire repository for header consistency
+git = "https://github.com/PipeWire/pipewire.git"
+tag = "1.0.3"
+depth = 1
+
+[constraints]
+# Prevent conflicts with legacy Linux audio servers
+conflicts = ["com.aliciaworks.audio.pulseaudio", "com.aliciaworks.audio.alsa"]
+# Core engine services required for threading and logging
+requires = []
+
+[build_hooks]
+# Ensure the host system has libpipewire-0.3-dev installed before compiling
+pre_build = "python3 scripts/check_deps.py --package libpipewire-0.3"
+
+[platforms.linux]
+# Link against the core PipeWire library
+link_libraries = ["pipewire-0.3"]
+cpp_flags = ["-DENGINE_AUDIO_PIPEWIRE", "-D_REENTRANT"]
+# Used by the Python build system to resolve include/library paths via pkg-config
+pkg_config_modules = ["libpipewire-0.3"]
+
+[platforms.android]
+# PipeWire is not a standard Android API; use audio-oboe instead
+enabled = false
+
+[platforms.windows]
+# PipeWire is Linux-exclusive; use audio-wasapi instead
+enabled = false
+
+[assets]
+# Default audio processing assets or test signals
+include_folders = ["assets/audio/internal"]
+
+[editor]
+# Integration hooks for the Python-based Editor UI
+has_audio_graph = true
+settings_schema = "pipewire_config_ui.json"
+
+[metadata]
+config_format_version = 1.0

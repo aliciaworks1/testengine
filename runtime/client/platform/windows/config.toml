@@ -1,0 +1,7 @@
+[rendering]
+default = "plt-render-dx12"
+fallback = ["plt-render-vulkan", "plt-render-opengl"]
+
+[metadata]
+# config version
+version = 1.0

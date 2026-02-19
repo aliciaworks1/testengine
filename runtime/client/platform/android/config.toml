@@ -1,0 +1,7 @@
+[rendering]
+default = "plt-render-vulkan"
+fallback = ["plt-render-opengles"]
+
+[metadata]
+# config version
+version = 1.0

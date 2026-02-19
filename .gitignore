@@ -1,0 +1,7 @@
+# Blobs
+build/
+plugins/**/thirdparty/
+
+# macOS
+.DS_Store
+xcuserdata/

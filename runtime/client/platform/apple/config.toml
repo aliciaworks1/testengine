@@ -1,0 +1,7 @@
+[rendering]
+default = "plt-render-metal"
+fallback = []
+
+[metadata]
+# config version
+version = 1.0

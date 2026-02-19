@@ -1,0 +1,50 @@
+[plugin]
+id = "com.engine.runtime.openxr"
+name = "OpenXR-Universal"
+version = "1.1.0"
+description = "Universal OpenXR wrapper for PCVR and Mobile Standalone"
+author = "AliciaWorks"
+
+[source]
+# Points to the official Khronos OpenXR-SDK or your custom fork
+git = "https://github.com/KhronosGroup/OpenXR-SDK.git"
+tag = "v1.1.36"
+# We only need the loader and headers, so we might use a shallow clone
+depth = 1
+
+[constraints]
+# OpenXR handles rendering, so it might conflict with other XR APIs like Google Cardboard
+conflicts = ["com.engine.runtime.google-vr"]
+# Requires a high-performance rendering backend
+requires = ["com.engine.render.vulkan"]
+
+[build_hooks]
+# OpenXR usually requires generating some headers or fetching the 'loader' binaries
+pre_build = "python3 scripts/fetch_loaders.py"
+
+[platforms.android]
+# Specific for Meta Quest / PICO / Vive Focus
+cmake_link_libraries = ["openxr_loader"]
+cpp_flags = ["-DXR_USE_PLATFORM_ANDROID", "-DXR_USE_GRAPHICS_API_VULKAN"]
+# Android XR apps require specific permissions in the Manifest
+manifest_permissions = [
+    "com.oculus.permission.HAND_TRACKING",
+    "android.permission.CAMERA"
+]
+# Path to the .so files inside the plugin
+library_dirs = ["native/sdk/android/arm64-v8a"]
+
+[platforms.windows]
+# Specific for SteamVR / Oculus Link
+link_libraries = ["openxr_loader.lib"]
+cpp_flags = ["-DXR_USE_PLATFORM_WIN32", "-DXR_USE_GRAPHICS_API_D3D11"]
+system_libs = ["Advapi32.lib", "User32.lib"]
+
+[assets]
+# Essential shaders for VR (e.g., Lens Distortion, Hidden Area Mask)
+include_folders = ["assets/shaders/xr", "assets/models/controllers"]
+
+[editor]
+# This tells your Python Editor to show a 'VR Preview' button
+has_preview_mode = true
+settings_schema = "settings_ui.json"

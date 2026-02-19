@@ -1,0 +1,4 @@
+files:
+  - source: virtualportal/Localizable.xcstrings
+    translation: virtualportal/Localizable.xcstrings
+    multilingual: 1

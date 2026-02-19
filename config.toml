@@ -1,0 +1,31 @@
+[project]
+name = "MyAwesomeGame"
+version = "1.0.0"
+display_version = "1.0-beta"
+author = "YourName Studio"
+
+[package]
+# If want to customize specific package name, go to runtime/client/[platform]/config.toml, it will override this.
+package_name = "com.yourstudio.myawesomegame"
+# It will auto add perfix like .app or .exe
+executable_name = "MyAwesomeGame"
+
+[plugins]
+enabled = [
+    "core-math-utils",
+    "phys-jolt-physics",
+    "feat-ai-vision"
+]
+
+[plugins.platform_extra]
+ios = ["plt-ios-arkit"]
+android = ["plt-android-sensors"]
+
+[build]
+obfuscate_python = false
+asset_compression = 6
+icon_path = "assets/branding/icon.png"
+
+[metadata]
+# config version,dont modify
+version = 1.0
