@@ -1,0 +1,75 @@
+[project]
+name = "MyAwesomeGame"
+version = "1.0.0"
+display_version = "1.0-beta"
+author = "YourName Studio"
+
+[package]
+# If want to customize specific package name, go to runtime/client/[platform]/config.toml, it will override this.
+package_name = "com.yourstudio.myawesomegame"
+# It will auto add perfix like .app or .exe
+executable_name = "MyAwesomeGame"
+
+[plugins]
+# Plugins enabled for ALL platforms
+enabled = [
+    "core-math-utils",
+    "phys-jolt-physics",
+    "feat-ai-vision"
+]
+
+# The default XR implementation (e.g., for PC/Generic)
+xr_backend = "feat-openxr"
+
+[platforms.android.plugins]
+# Android uses OpenXR (Oculus/Pico/Vive)
+xr_backend = "feat-openxr"
+extra = ["plt-android-sensors"]
+
+[platforms.web.plugins]
+# Web uses the specialized WebXR plugin
+xr_backend = "feat-webxr"
+
+[platforms.ios.plugins]
+# Apple uses ARKit for XR/AR capabilities
+xr_backend = "plt-ios-arkit"
+extra = ["plt-ios-haptics"]
+
+[platforms.macos.plugins]
+# Vision Pro / Mac might use a different specialized backend
+xr_backend = "plt-apple-xr"
+
+[build]
+obfuscate_python = false
+asset_compression = 6
+icon_path = "assets/branding/icon.png"
+
+# --- GLOBAL RENDERING STRATEGY ---
+[rendering]
+#default = "render-vulkan"
+#fallback = ["render-gles3"]
+vsync = true
+msaa = 4
+
+# --- WINDOWS OVERRIDES ---
+[platforms.windows.rendering]
+# Windows users prefer DX12 for performance/RayTracing
+default = "render-dx12"
+fallback = ["render-vulkan", "render-dx11"]
+
+# --- IOS OVERRIDES ---
+[platforms.ios.rendering]
+# iOS ONLY supports Metal
+default = "render-metal"
+fallback = []
+msaa = 2  # Lower MSAA to save battery on mobile
+
+# --- ANDROID OVERRIDES ---
+[platforms.android.rendering]
+# Most modern Androids are Vulkan, but fallback is critical
+default = "render-vulkan"
+fallback = ["render-gles3"]
+
+[metadata]
+# config version,dont modify
+version = 1.0

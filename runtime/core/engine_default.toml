@@ -26,6 +26,32 @@ obfuscate_python = false
 asset_compression = 6
 icon_path = "assets/branding/icon.png"
 
+# --- GLOBAL RENDERING STRATEGY ---
+[rendering]
+#default = "render-vulkan"
+#fallback = ["render-gles3"]
+vsync = true
+msaa = 4
+
+# --- WINDOWS OVERRIDES ---
+[platforms.windows.rendering]
+# Windows users prefer DX12 for performance/RayTracing
+default = "render-dx12"
+fallback = ["render-vulkan", "render-dx11"]
+
+# --- IOS OVERRIDES ---
+[platforms.ios.rendering]
+# iOS ONLY supports Metal
+default = "render-metal"
+fallback = []
+msaa = 2  # Lower MSAA to save battery on mobile
+
+# --- ANDROID OVERRIDES ---
+[platforms.android.rendering]
+# Most modern Androids are Vulkan, but fallback is critical
+default = "render-vulkan"
+fallback = ["render-gles3"]
+
 [metadata]
 # config version,dont modify
 version = 1.0

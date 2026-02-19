@@ -5,3 +5,6 @@ plugins/**/thirdparty/
 # macOS
 .DS_Store
 xcuserdata/
+
+#temp
+projects/
