@@ -22,7 +22,6 @@ enabled = [
 xr_backend = "feat-openxr"
 
 [platforms.android.plugins]
-# Android uses OpenXR (Oculus/Pico/Vive)
 xr_backend = "feat-openxr"
 extra = ["plt-android-sensors"]
 

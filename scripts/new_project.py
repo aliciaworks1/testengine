@@ -64,10 +64,15 @@ def main():
     engine_root = Path(__file__).parent.parent
     project_path = engine_root / "projects" / args.name
 
-    # 1. Copy Template to Project Root
+    # 1. Check if project already exists
+    if project_path.exists():
+        print(f"Error: Project {args.name} already exists at {project_path}.")
+        return
+
+    # 2. Copy Template to Project Root
     print(f"Initializing project: {args.name}")
     template_path = engine_root / "templates" / args.template
-    
+
     if not template_path.exists():
         print(f"Error: Template {template_path} not found.")
         return

@@ -1,0 +1,6 @@
+[data]
+# sqlite,mysql,postgresql
+
+[metadata]
+# config version,dont modify
+version = 1.0
